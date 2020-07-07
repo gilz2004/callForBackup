@@ -1,11 +1,11 @@
 {
-  "name": "chrome-extension-boilerplate-react",
+  "name": "chrome-extension-react",
   "version": "2.7.0",
-  "description": "A chrome extension boilerplate built with React 16 and Webpack 4",
+  "description": "A chrome extension built with React 16 and Webpack 4",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/lxieyang/chrome-extension-boilerplate-react.git"
+    "url": "https://github.com/gilz2004/callForBackup.git"
   },
   "scripts": {
     "build": "node utils/build.js",
@@ -18,7 +18,11 @@
     "@types/react": "^16.9.26",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
-    "react-hot-loader": "^4.12.20"
+    "react-hot-loader": "^4.12.20",
+    "react-icons": "^3.10.0",
+    "react-redux": "^7.2.0",
+    "redux": "^4.0.5",
+    "styled-components": "^5.1.1"
   },
   "devDependencies": {
     "@babel/core": "^7.9.0",
