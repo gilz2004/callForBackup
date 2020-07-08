@@ -24,7 +24,7 @@ const App = () => {
   return (
     <AppBox>
       <ExtensionIcon />
-      <ExtensionText>Ask friends backup</ExtensionText>
+      <ExtensionText>Hey DaviD</ExtensionText>
     </AppBox>
   );
 };
