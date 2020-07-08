@@ -10,9 +10,9 @@
 
 // const outerMenu = document.querySelector('.o8kakjsu');
 
-import React from 'react';
-import { render } from 'react-dom';
-import App from '../../components/App';
+// import React from 'react';
+// import { render } from 'react-dom';
+// import App from '../../components/App';
 
 // const extension = document.createElement('div');
 // extension.id = 'gilExtension';
