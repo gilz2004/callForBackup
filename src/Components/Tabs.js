@@ -1,10 +1,10 @@
 import React from 'react';
 import styled from 'styled-components';
-import NavItem from './NavItem';
+import TabItem from './TabItem';
 
 // TODO: remove mock data soon..
 // state -> max navItems are going to be 8
-const mockNavItems = [
+const mockTabs = [
   { id: 1, title: 'תחבורה' },
   { id: 2, title: 'כלכלה' },
   { id: 3, title: 'תחבורה' },
@@ -14,25 +14,27 @@ const mockNavItems = [
   { id: 7, title: 'תחבורה' },
   { id: 8, title: 'כלכלה' },
 ];
-const NavItemsBox = styled.div`
+const TabsBox = styled.div`
   line-height: 3px;
-  font-size: 10px;
+  font-size: 14px;
   max-height: 70px;
-  border-bottom: 2px solid gray;
-  padding: 8px 0;
+  border-bottom: 2px solid #ecf0f1;
+  padding: 8px;
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  grid-gap: 10px;
+  grid-row-gap: 10px;
+  grid-column-gap: 3px;
+  background: #fff;
 `;
 
-const NavItems = () => {
+const Tabs = () => {
   return (
-    <NavItemsBox>
-      {mockNavItems.map(({ id, title }) => {
-        return <NavItem key={id} title={title} />;
+    <TabsBox>
+      {mockTabs.map(({ id, title }) => {
+        return <TabItem key={id} title={title} />;
       })}
-    </NavItemsBox>
+    </TabsBox>
   );
 };
 
-export default NavItems;
+export default Tabs;
