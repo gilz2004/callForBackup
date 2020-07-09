@@ -20,8 +20,14 @@ const mockPosts = [
 ];
 const PostsBox = styled.div`
   max-height: 250px;
-  //   padding-top: 5px;
+  overflow-y: scroll;
+  ::-webkit-scrollbar {
+    display: none;
+  }
 `;
+
+//TODO: add on component load a calculation to figure out the total posts, and show an some arrow that the user will know that he can scroll.
+//because the scroll bar is UG and i hidde it. and fix the margin between a half post element to the footer
 const Posts = () => {
   return (
     <PostsBox>

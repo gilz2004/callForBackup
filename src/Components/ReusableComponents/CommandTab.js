@@ -3,7 +3,7 @@ import styled from 'styled-components';
 const CommandTabBox = styled.div`
   display: flex;
   padding: 10px;
-  justify-content: center;
+  justify-content: space-between;
   border-bottom: 1px solid #f0f0f2;
   cursor: pointer;
 `;
