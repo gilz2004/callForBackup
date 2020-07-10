@@ -3,12 +3,16 @@ import { render } from 'react-dom';
 
 import Popup from './Popup';
 import { Provider } from 'react-redux';
-import store from '../../Redux/Store/store';
+// import store from '../../Redux/Store/store';
+import { Store } from 'webext-redux';
 
-render(
-  <Provider store={store}>
-    <Popup />
-  </Provider>,
+const store = new Store();
+store.ready().then(() => {
+  render(
+    <Provider store={store}>
+      <Popup />
+    </Provider>,
 
-  window.document.querySelector('#app-container')
-);
+    window.document.querySelector('#app-container')
+  );
+});
