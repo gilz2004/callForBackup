@@ -7,6 +7,9 @@ import Posts from '../../Components/Posts';
 import CommandTab from '../../Components/ReusableComponents/CommandTab';
 import { MdEventBusy } from 'react-icons/md';
 import { RiFileDownloadLine } from 'react-icons/ri';
+import { v4 as uuidv4 } from 'uuid';
+import { restrictSelectedTitleLength } from '../../../utils/helpers';
+
 const PopUpBox = styled.div`
   background: #34495e;
   outline: auto;
@@ -35,33 +38,36 @@ const SecondIconWrapper = styled(MdEventBusy)`
   height: 20px;
   opacity: 0.4;
 `;
-const initialTitle = '';
+const initialCallForHelpPost = {
+  creator: '',
+  id: '',
+  title: '',
+};
 
 const Popup = () => {
-  const [callForHelpTitle, setCallForHelpTitle] = React.useState(initialTitle);
+  const [callForHelpPost, setCallForHelpPost] = React.useState(
+    initialCallForHelpPost
+  );
 
-  // TODO : REMOVE THIS FUNCTION TO UTILS.JS
-  //REFACTOR PRO  - MAYBE UNDO THE FOR LOOP
-  const titleRestriction = (title) => {
-    const titlmaxTitleWords = 4;
-    const titleRestrictionArray = title.split(' ');
-    let newTitle = '';
-    for (let i = 0; i < titlmaxTitleWords; i++) {
-      newTitle += ' ' + titleRestrictionArray[i];
+  chrome.contextMenus.onClicked.addListener(
+    ({ menuItemId, selectionText, pageUrl }) => {
+      if (menuItemId === 'selectedData' && selectionText && pageUrl) {
+        const newTitle = restrictSelectedTitleLength(selectionText);
+        return setCallForHelpPost((oldCallForHelpPost) => {
+          return {
+            ...oldCallForHelpPost,
+            id: uuidv4(),
+            title: newTitle,
+            creator: 'gil',
+          };
+        });
+        //when db set, todo: remove the return from setState
+        //from here push to data base. try and catch!
+      }
+      return;
     }
-    return newTitle;
-  };
-
-  chrome.contextMenus.onClicked.addListener(({ menuItemId, selectionText }) => {
-    const restrictedTitle = titleRestriction(selectionText);
-    if (menuItemId === 'selectedData' && selectionText) {
-      return setCallForHelpTitle(restrictedTitle);
-      //from here push to data base. try and catch!
-    }
-    return;
-  });
-
-  console.log('call for hlp post title', callForHelpTitle);
+  );
+  console.log(callForHelpPost);
   return (
     <PopUpBox>
       <Header />
