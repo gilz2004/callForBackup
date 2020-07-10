@@ -18,7 +18,8 @@ const PostNumbers = styled.div`
   opacity: 0.7;
 `;
 
-const Post = ({ title, callsForHelp, comments }) => {
+const Post = ({ title, callsForHelp, comments, ...other }) => {
+  console.log(title);
   let numberToRender, comment;
   callsForHelp === 0
     ? (numberToRender = comments)

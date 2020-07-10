@@ -56,3 +56,6 @@
 // });
 
 //new design class of the popup - rnr61an3
+const creator = document.querySelector('.oajrlxb2'); // get the strong element and then get the span element with the name of the use
+
+console.log(creator);

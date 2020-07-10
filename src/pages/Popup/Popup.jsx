@@ -9,6 +9,8 @@ import { MdEventBusy } from 'react-icons/md';
 import { RiFileDownloadLine } from 'react-icons/ri';
 import { v4 as uuidv4 } from 'uuid';
 import { restrictSelectedTitleLength } from '../../../utils/helpers';
+import { connect } from 'react-redux';
+import { addPost } from '../../Redux/Actions/postAction';
 
 const PopUpBox = styled.div`
   background: #34495e;
@@ -38,36 +40,40 @@ const SecondIconWrapper = styled(MdEventBusy)`
   height: 20px;
   opacity: 0.4;
 `;
-const initialCallForHelpPost = {
-  creator: '',
-  id: '',
-  title: '',
-};
+// const initialCallForHelpPost = {
+//   creator: '',
+//   id: '',
+//   title: '',
+// };
 
-const Popup = () => {
-  const [callForHelpPost, setCallForHelpPost] = React.useState(
-    initialCallForHelpPost
-  );
+const Popup = ({ addPost, posts }) => {
+  // const [callForHelpPost, setCallForHelpPost] = React.useState(
+  //   initialCallForHelpPost
+  // );
 
   chrome.contextMenus.onClicked.addListener(
     ({ menuItemId, selectionText, pageUrl }) => {
       if (menuItemId === 'selectedData' && selectionText && pageUrl) {
         const newTitle = restrictSelectedTitleLength(selectionText);
-        return setCallForHelpPost((oldCallForHelpPost) => {
-          return {
-            ...oldCallForHelpPost,
-            id: uuidv4(),
-            title: newTitle,
-            creator: 'gil',
-          };
-        });
-        //when db set, todo: remove the return from setState
+        // TODO: CHECK HOW MANY CALL FOR HELP BY THE POST URL.
+        // TODO:MAKE SURE THAT HTE USER SELECT ONLY THE FIREST ROW TO SET THE TITLE AS ONLY FIRST ROW STRING
+        const newPost = {
+          id: uuidv4(),
+          title: newTitle,
+          postCreator: 'gilz',
+          comments: 10,
+          postCategory: '',
+          callsForHelp: 7,
+          pageUrl,
+        };
+        return addPost(newPost);
+
         //from here push to data base. try and catch!
       }
       return;
     }
   );
-  console.log(callForHelpPost);
+
   return (
     <PopUpBox>
       <Header />
@@ -81,4 +87,11 @@ const Popup = () => {
   );
 };
 
-export default Popup;
+const mapStateToProps = (state) => ({
+  posts: state.callsForHelp.posts,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  addPost: (post) => dispatch(addPost(post)),
+});
+export default connect(mapStateToProps, mapDispatchToProps)(Popup);
