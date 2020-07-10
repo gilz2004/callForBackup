@@ -87,11 +87,7 @@ const Popup = ({ addPost, posts }) => {
   );
 };
 
-const mapStateToProps = (state) => ({
-  posts: state.callsForHelp.posts,
-});
-
 const mapDispatchToProps = (dispatch) => ({
   addPost: (post) => dispatch(addPost(post)),
 });
-export default connect(mapStateToProps, mapDispatchToProps)(Popup);
+export default connect(null, mapDispatchToProps)(Popup);

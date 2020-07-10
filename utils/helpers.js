@@ -3,7 +3,7 @@ export const restrictSelectedTitleLength = (title) => {
   const titleRestrictionArray = title.split(' ');
   let newTitle = '';
   for (let i = 0; i < maxTitleLength; i++) {
-    newTitle += ' ' + titleRestrictionArray[i];
+    if (titleRestrictionArray[i]) newTitle += ' ' + titleRestrictionArray[i];
   }
   return newTitle;
 };

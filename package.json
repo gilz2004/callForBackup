@@ -16,6 +16,7 @@
     "@hot-loader/react-dom": "^16.13.0",
     "@types/chrome": "0.0.104",
     "@types/react": "^16.9.26",
+    "axios": "^0.19.2",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-hot-loader": "^4.12.20",
@@ -23,8 +24,10 @@
     "react-redux": "^7.2.0",
     "redux": "^4.0.5",
     "redux-logger": "^3.0.6",
+    "redux-thunk": "^2.3.0",
     "styled-components": "^5.1.1",
-    "uuid": "^8.2.0"
+    "uuid": "^8.2.0",
+    "webext-redux": "^2.1.7"
   },
   "devDependencies": {
     "@babel/core": "^7.9.0",
