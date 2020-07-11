@@ -1,6 +1,8 @@
 /* global chrome */
 import React from 'react';
 import styled from 'styled-components';
+import { connect } from 'react-redux';
+import { removePost } from '../Redux/Actions/postAction';
 
 const PostBox = styled.div`
   height: 40px;
@@ -19,15 +21,16 @@ const PostNumbers = styled.div`
   opacity: 0.7;
 `;
 
-const Post = ({ title, callsForHelp, comments, pageUrl, ...other }) => {
-  let numberToRender, comment;
-  callsForHelp === 0
-    ? (numberToRender = comments)
-    : (numberToRender = callsForHelp);
-
-  numberToRender === callsForHelp
-    ? (comment = 'קריאות לעזרה')
-    : (comment = 'תגובות');
+const Post = ({
+  id,
+  title,
+  callsForHelp,
+  comments,
+  pageUrl,
+  removePost,
+  ...other
+}) => {
+  const removePostMsg = 'מחק קריאה';
 
   const handleTabClick = () => {
     chrome.tabs.create({
@@ -36,11 +39,14 @@ const Post = ({ title, callsForHelp, comments, pageUrl, ...other }) => {
   };
 
   return (
-    <PostBox onClick={handleTabClick}>
-      <Title>{title}</Title>
-      <PostNumbers>{`${numberToRender} ${comment}`}</PostNumbers>
+    <PostBox>
+      <Title onClick={handleTabClick}>{title}</Title>
+      <PostNumbers onClick={() => removePost(id)}>{removePostMsg}</PostNumbers>
     </PostBox>
   );
 };
 
-export default Post;
+const mapDispatchToProps = (dispatch) => ({
+  removePost: (id) => dispatch(removePost(id)),
+});
+export default connect(null, mapDispatchToProps)(Post);

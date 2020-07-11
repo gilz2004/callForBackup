@@ -20,7 +20,7 @@ import { connect } from 'react-redux';
 //   },
 // ];
 const PostsBox = styled.div`
-  max-height: 250px;
+  max-height: 210px;
   overflow-y: scroll;
   ::-webkit-scrollbar {
     display: none;
@@ -33,7 +33,7 @@ const Posts = ({ posts }) => {
   return (
     <PostsBox>
       {posts.map(({ id, ...other }) => {
-        return <Post key={id} {...other} />;
+        return <Post key={id} id={id} {...other} />;
       })}
     </PostsBox>
   );
