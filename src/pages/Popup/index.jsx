@@ -3,16 +3,22 @@ import { render } from 'react-dom';
 
 import Popup from './Popup';
 import { Provider } from 'react-redux';
-// import store from '../../Redux/Store/store';
-import { Store } from 'webext-redux';
 
-const store = new Store();
-store.ready().then(() => {
-  render(
-    <Provider store={store}>
-      <Popup />
-    </Provider>,
+import { Store, applyMiddleware } from 'webext-redux';
+import logger from 'redux-logger';
 
-    window.document.querySelector('#app-container')
-  );
-});
+const proxyStore = new Store();
+const middleware = [logger];
+const storeWithMiddleware = applyMiddleware(proxyStore, ...middleware);
+proxyStore
+  .ready()
+  .then(() => {
+    render(
+      <Provider store={storeWithMiddleware}>
+        <Popup />
+      </Provider>,
+
+      window.document.querySelector('#app-container')
+    );
+  })
+  .catch((err) => console.log('Somthing went wrong', err));

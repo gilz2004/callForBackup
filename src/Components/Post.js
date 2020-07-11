@@ -1,3 +1,4 @@
+/* global chrome */
 import React from 'react';
 import styled from 'styled-components';
 
@@ -18,8 +19,7 @@ const PostNumbers = styled.div`
   opacity: 0.7;
 `;
 
-const Post = ({ title, callsForHelp, comments, ...other }) => {
-  console.log(title);
+const Post = ({ title, callsForHelp, comments, pageUrl, ...other }) => {
   let numberToRender, comment;
   callsForHelp === 0
     ? (numberToRender = comments)
@@ -29,8 +29,14 @@ const Post = ({ title, callsForHelp, comments, ...other }) => {
     ? (comment = 'קריאות לעזרה')
     : (comment = 'תגובות');
 
+  const handleTabClick = () => {
+    chrome.tabs.create({
+      url: `${pageUrl}`,
+    });
+  };
+
   return (
-    <PostBox onClick={() => console.log('picked post')}>
+    <PostBox onClick={handleTabClick}>
       <Title>{title}</Title>
       <PostNumbers>{`${numberToRender} ${comment}`}</PostNumbers>
     </PostBox>

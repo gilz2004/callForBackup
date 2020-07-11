@@ -66,7 +66,7 @@ const Popup = ({ addPost, posts }) => {
           callsForHelp: 7,
           pageUrl,
         };
-        return addPost(newPost);
+        addPost(newPost);
 
         //from here push to data base. try and catch!
       }

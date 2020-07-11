@@ -1,5 +1,7 @@
+/* global chrome */
 import React from 'react';
 import styled from 'styled-components';
+import { connect } from 'react-redux';
 const CommandTabBox = styled.div`
   display: flex;
   padding: 10px;
@@ -18,13 +20,26 @@ const IconBox = styled.div`
   align-self: flex-end;
 `;
 
-const CommandTab = ({ text, icon }) => {
+const CommandTab = ({ text, icon, posts }) => {
+  const handleClick = () => {
+    if (text === 'פתח הכל') {
+      const limitTabAmount = 3;
+      posts.forEach(({ pageUrl }, index) => {
+        if (index < limitTabAmount) {
+          chrome.tabs.create({ url: `${pageUrl}` });
+        }
+      });
+    }
+  };
+
   return (
-    <CommandTabBox>
+    <CommandTabBox onClick={handleClick}>
       <TextBox>{text}</TextBox>
       <IconBox>{icon}</IconBox>
     </CommandTabBox>
   );
 };
-
-export default CommandTab;
+const mapStateToProps = (state) => ({
+  posts: state.callsForHelp.posts,
+});
+export default connect(mapStateToProps)(CommandTab);

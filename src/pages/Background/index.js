@@ -1,8 +1,9 @@
 import '../../assets/img/icon-34.png';
 import '../../assets/img/icon-128.png';
-import axios from 'axios';
-import store from '../../Redux/Store/store';
+import { wrapStore } from 'webext-redux';
+import { reduxStore } from '../../Redux/Store/store';
 
+wrapStore(reduxStore);
 const availableContextMenuPages = ['https://www.facebook.com/*'];
 
 const contextMenuItem = {
@@ -13,5 +14,5 @@ const contextMenuItem = {
 };
 
 chrome.contextMenus.create(contextMenuItem);
-// TODO: REMOVE CONSOLE LOG
+
 console.log('background scripts here.');

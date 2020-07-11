@@ -1,9 +1,4 @@
-import { createStore, applyMiddleware } from 'redux';
-import logger from 'redux-logger';
-import { NODE_ENV } from '../../../utils/env';
+import { createStore } from 'redux';
 import rootReducer from '../Reducers/rootReducer';
 
-const middleWare = [];
-if (NODE_ENV === 'development') middleWare.push(logger);
-
-export const store = createStore(rootReducer, applyMiddleware(...middleWare));
+export const reduxStore = createStore(rootReducer);
