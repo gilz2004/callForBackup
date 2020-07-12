@@ -6,10 +6,11 @@ const HeaderBox = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  border-bottom: 2px solid #ecf0f1;
+  font-size: 20px;
+  padding: 5px;
 `;
 const Header = () => {
-  return <HeaderBox>*Header Text*</HeaderBox>;
+  return <HeaderBox>קריאה לעזרה</HeaderBox>;
 };
 
 export default Header;

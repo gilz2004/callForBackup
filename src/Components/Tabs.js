@@ -4,21 +4,12 @@ import TabItem from './TabItem';
 
 // TODO: remove mock data soon..
 // state -> max navItems are going to be 8
-const mockTabs = [
-  { id: 1, title: 'תחבורה' },
-  { id: 2, title: 'כלכלה' },
-  { id: 3, title: 'תחבורה' },
-  { id: 4, title: 'כלכלה' },
-  { id: 5, title: 'תחבורה' },
-  { id: 6, title: 'כלכלה' },
-  { id: 7, title: 'תחבורה' },
-  { id: 8, title: 'כלכלה' },
-];
+const mockTabs = [{ id: 1, title: 'כללי' }];
 const TabsBox = styled.div`
   line-height: 3px;
-  font-size: 14px;
   max-height: 70px;
-  border-bottom: 2px solid #ecf0f1;
+  border-right: 3px solid #34495e;
+  border-left: 3px solid #34495e;
   padding: 8px;
   display: grid;
   grid-template-columns: repeat(4, 1fr);

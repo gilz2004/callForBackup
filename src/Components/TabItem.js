@@ -14,15 +14,20 @@ const TabItemBox = styled.span`
   text-align: center;
   border-radius: 5px;
 `;
+
+const TabTitle = styled.span`
+  font-size: 16px;
+`;
+
 const TabItem = ({ title }) => {
-  const [pickedItem, setPickedItem] = React.useState(false);
+  const [pickedItem, setPickedItem] = React.useState(true);
   const handleNavPicker = () => {
     setPickedItem(!pickedItem);
   };
 
   return (
     <TabItemBox pickedItem={pickedItem} onClick={handleNavPicker}>
-      <span>{title}</span>
+      <TabTitle>{title}</TabTitle>
     </TabItemBox>
   );
 };
