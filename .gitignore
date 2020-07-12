@@ -18,3 +18,7 @@
 
 # secrets
 secrets.*.js
+
+
+
+.env

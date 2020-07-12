@@ -9,6 +9,7 @@ import { restrictSelectedTitleLength } from '../../../utils/helpers';
 import { connect } from 'react-redux';
 import { addPost } from '../../Redux/Actions/postAction';
 import Content from '../../Components/Content';
+import { writeData } from '../../firebase/firebase';
 
 const PopUpBox = styled.div`
   background: #34495e;
@@ -23,7 +24,7 @@ const PopUpBox = styled.div`
 
 const Popup = ({ addPost }) => {
   chrome.contextMenus.onClicked.addListener(
-    ({ menuItemId, selectionText, pageUrl }) => {
+    async ({ menuItemId, selectionText, pageUrl }) => {
       if (menuItemId === 'selectedData' && selectionText && pageUrl) {
         const newTitle = restrictSelectedTitleLength(selectionText);
         // TODO: CHECK HOW MANY CALL FOR HELP BY THE POST URL.
@@ -31,14 +32,16 @@ const Popup = ({ addPost }) => {
         const newPost = {
           id: uuidv4(),
           title: newTitle,
-          postCreator: 'gilz',
-          comments: 10,
           postCategory: '',
-          callsForHelp: 7,
           pageUrl,
+          data: new Date(),
         };
-        addPost(newPost);
-
+        try {
+          await writeData(newPost);
+          addPost(newPost);
+        } catch (err) {
+          console.log(err);
+        }
         //from here push to data base. try and catch!
       }
       return;
