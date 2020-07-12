@@ -1,6 +1,7 @@
 export const postsActionTypes = {
   ADD_POST: 'ADD_POST',
   REMOVE_POST: 'REMOVE_POST',
+  UPDATE_POSTS: 'UPDATE_POSTS',
 };
 
 export const addPost = (post) => ({
@@ -14,3 +15,8 @@ export const removePost = (id) => {
     payload: id,
   };
 };
+
+export const updatePosts = (posts) => ({
+  type: postsActionTypes.UPDATE_POSTS,
+  payload: posts,
+});

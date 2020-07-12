@@ -3,6 +3,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { connect } from 'react-redux';
 import { removePost } from '../Redux/Actions/postAction';
+import { removePostFromDb } from '../firebase/firebase';
 
 const PostBox = styled.div`
   height: 40px;
@@ -38,10 +39,23 @@ const Post = ({
     });
   };
 
+  const handlePostRemove = async (id) => {
+    try {
+      //TODO:MAYBE ADD A POWER USER ? THAT CAN ONLY DELETE POSTS FROM THE DB?
+      //EACH USER CAN DELETE HIS LOCAL POSTS.
+      await removePostFromDb(id);
+      removePost(id);
+    } catch (err) {
+      console.log('Something went wrong on post removed', err);
+    }
+  };
+
   return (
     <PostBox>
       <Title onClick={handleTabClick}>{title}</Title>
-      <PostNumbers onClick={() => removePost(id)}>{removePostMsg}</PostNumbers>
+      <PostNumbers onClick={() => handlePostRemove(id)}>
+        {removePostMsg}
+      </PostNumbers>
     </PostBox>
   );
 };

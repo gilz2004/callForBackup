@@ -7,9 +7,9 @@ import Tabs from '../../Components/Tabs';
 import { v4 as uuidv4 } from 'uuid';
 import { restrictSelectedTitleLength } from '../../../utils/helpers';
 import { connect } from 'react-redux';
-import { addPost } from '../../Redux/Actions/postAction';
+import { addPost, updatePosts } from '../../Redux/Actions/postAction';
 import Content from '../../Components/Content';
-import { writeData } from '../../firebase/firebase';
+import { writeData, listenToData } from '../../firebase/firebase';
 
 const PopUpBox = styled.div`
   background: #34495e;
@@ -22,7 +22,22 @@ const PopUpBox = styled.div`
   position: relative;
 `;
 
-const Popup = ({ addPost }) => {
+const Popup = ({ addPost, updatePosts }) => {
+  React.useEffect(() => {
+    const realTimeUpdate = listenToData('posts');
+    realTimeUpdate.on('value', async (snapShot) => {
+      try {
+        const response = await snapShot.val();
+        if (response) {
+          const posts = Object.values(response);
+          updatePosts(posts);
+        }
+      } catch (err) {
+        console.log('Something wrong', err);
+      }
+    });
+  }, []);
+
   chrome.contextMenus.onClicked.addListener(
     async ({ menuItemId, selectionText, pageUrl }) => {
       if (menuItemId === 'selectedData' && selectionText && pageUrl) {
@@ -59,5 +74,6 @@ const Popup = ({ addPost }) => {
 
 const mapDispatchToProps = (dispatch) => ({
   addPost: (post) => dispatch(addPost(post)),
+  updatePosts: (posts) => dispatch(updatePosts(posts)),
 });
 export default connect(null, mapDispatchToProps)(Popup);

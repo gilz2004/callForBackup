@@ -16,6 +16,11 @@ const postsReducer = (state = initialPosts, action) => {
         ...state,
         posts: state.posts.filter((post) => post.id !== action.payload),
       };
+    case postsActionTypes.UPDATE_POSTS:
+      return {
+        ...state,
+        posts: action.payload.map((post) => post),
+      };
     default:
       return state;
   }
