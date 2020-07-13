@@ -1,61 +1,30 @@
-// import { printLine } from './modules/print';
-
-// console.log('Content script works!');
-// // console.log('Must reload extension for modifications to take effect.');
-// printLine('Welcome to FaceBook extension - By Gil');
-// const menu = document.querySelector('.swg4t2nn');
-// const hr = document.createElement('hr');
-// menu.appendChild(hr);
-// const menuItem = document.querySelector('.oajrlxb2');
-
-// const outerMenu = document.querySelector('.o8kakjsu');
-
-// import React from 'react';
-// import { render } from 'react-dom';
-// import App from '../../components/App';
-
-// const extension = document.createElement('div');
-// extension.id = 'gilExtension';
-// //add here were to append the extension tab
-// render(<App />, document.getElementById('gilExtension'));
-
-// console.log('outside world');
-// const appendElement = () => {
-//TODO:ASYNC CALL TO THE MENU MAKES THE FIRST RENDER OF THE MENU TO SHOW NULL.//ON THE SECOND CLICK ALL WORKS.
-// FIX THIS BUG
-//AND MAKE SURE EACH ... BUTTON CLICKED THEN OPEN the MENU WITH MY CUSTOM TAB.
-//AND UNSUBSCRIBE FROM THE EVENT ?._54ng
-//   const waitUntilElementLoads = (selector, callBack) => {
-//     console.log('inside waitUntil');
-//     const menu = document.querySelector(selector);
-//     if (menu) return callBack(menu);
-//     setTimeout(() => {
-//       waitUntilElementLoads(selector, callBack);
-//     }, 300);
-//   };
-
-//   waitUntilElementLoads('_54ng', (menu) => {
-// console.log(menu, 'menu');
-
-// const extension = document.createElement('div');
-// extension.id = 'gilExtension';
-// menu.appendChild(extension);
-// render(<App />, document.getElementById('gilExtension'));
-//   });
-//   console.log('runing');
+// //
+// const getPostLink = () => {
+//   const post = window.document.querySelector('.b1v8xokw');
+//   console.log(post);
+//   const getHref = 'href';
+//   const postLinkAttr = post.getAttribute(getHref);
+//   console.log('POSTLINK', postLinkAttr);
 // };
+// // const spanToHover = document.getElementById('jsc_c_12');
+// // const secondSpanToHover = document.getElementById('jsc_c_1j');
+// const spanToHover = document.querySelector('._5pcq');
+// console.log(spanToHover, spanToHover);
+// spanToHover.addEventListener('mouseover', getPostLink);
 
-// const togglerBtn = document.querySelectorAll('._4xev');
-// const hideMenu = document.querySelector('.hideToggler');
-// console.log("logged",document.querySelector('._54ng'));
-// togglerBtn.forEach((btn) => {
-//will work only one time always.
-//   console.log(btn);
-//   console.log('hide', hideMenu);
-//   btn.addEventListener('click', appendElement);
-// });
+// tojvnm2t a6sixzi8 abs2jz4q a8s20v7p t1p8iaqh k5wvi7nf q3lfd5jv pk4s997a bipmatt0 cebpdrjk qowsmv63 owwhemhu dp1hu0rb dhp61c6y iyyx5f41
 
-//new design class of the popup - rnr61an3
-const creator = document.querySelector('.oajrlxb2'); // get the strong element and then get the span element with the name of the use
+// const old_FB_ui_divRef = document.querySelector('._232_');
+// console.log(old_FB_ui_divRef);
+// const old_FB_ui_postLinkRef = document.querySelector('._5pcq');
+// console.log(old_FB_ui_postLinkRef);
 
-console.log(creator);
+const old_FB_ui_refs = {
+  divPostWrapper: document.querySelector('._232_'),
+  postLink: document.querySelector('._5pcq').href,
+};
+//post link will hold the link to the post.
+//querySelector will return the first one only.
+console.log(old_FB_ui_refs);
+
+const newFB_ui_div = document.querySelector('.ll8tlv6m');

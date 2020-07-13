@@ -7,3 +7,9 @@ export const restrictSelectedTitleLength = (title) => {
   }
   return newTitle;
 };
+
+export const checkForExistsingPost = (posts, url) => {
+  const post = posts.find((post) => post.pageUrl === url);
+  console.log('post found?>', post);
+  return post ? true : false;
+};

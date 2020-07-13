@@ -5,7 +5,10 @@ import Header from '../../Components/Header';
 import Tabs from '../../Components/Tabs';
 
 import { v4 as uuidv4 } from 'uuid';
-import { restrictSelectedTitleLength } from '../../../utils/helpers';
+import {
+  restrictSelectedTitleLength,
+  checkForExistsingPost,
+} from '../../../utils/helpers';
 import { connect } from 'react-redux';
 import { addPost, updatePosts } from '../../Redux/Actions/postAction';
 import Content from '../../Components/Content';
@@ -21,8 +24,9 @@ const PopUpBox = styled.div`
   font-family: 'Bellefair', serif;
   position: relative;
 `;
-
-const Popup = ({ addPost, updatePosts }) => {
+const initialPosts = {};
+const Popup = ({ addPost, updatePost, posts }) => {
+  const [posts, setPosts] = React.useState(initialPosts);
   React.useEffect(() => {
     const realTimeUpdate = listenToData('posts');
     realTimeUpdate.on('value', async (snapShot) => {
@@ -51,13 +55,14 @@ const Popup = ({ addPost, updatePosts }) => {
           pageUrl,
           data: new Date(),
         };
+
+        // if (checkForExistsingPost(posts, pageUrl)) return;
         try {
           await writeData(newPost);
           addPost(newPost);
         } catch (err) {
-          console.log(err);
+          console.error(err);
         }
-        //from here push to data base. try and catch!
       }
       return;
     }
@@ -76,4 +81,5 @@ const mapDispatchToProps = (dispatch) => ({
   addPost: (post) => dispatch(addPost(post)),
   updatePosts: (posts) => dispatch(updatePosts(posts)),
 });
+
 export default connect(null, mapDispatchToProps)(Popup);
