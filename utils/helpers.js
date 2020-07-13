@@ -9,9 +9,8 @@ export const restrictSelectedTitleLength = (title) => {
 };
 
 export const checkForExistsingPost = (posts, url) => {
-  console.log('checink', posts);
   const post = posts.find((post) => post.pageUrl === url);
-  console.log('post found?>', post);
+
   if (post) return true;
   return false;
 };

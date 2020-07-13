@@ -45,7 +45,7 @@ const Post = ({
       await removePostFromDb(id);
       removePost(id);
     } catch (err) {
-      console.log('Something went wrong on post removed', err);
+      console.error('Something went wrong on post removed', err);
     }
   };
 

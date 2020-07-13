@@ -25,6 +25,6 @@ const old_FB_ui_refs = {
 };
 //post link will hold the link to the post.
 //querySelector will return the first one only.
-console.log(old_FB_ui_refs);
+// console.log(old_FB_ui_refs);
 
 const newFB_ui_div = document.querySelector('.ll8tlv6m');

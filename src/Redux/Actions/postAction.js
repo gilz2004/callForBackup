@@ -9,7 +9,6 @@ export const addPost = (post) => ({
   payload: post,
 });
 export const removePost = (id) => {
-  console.log(id, 'im id');
   return {
     type: postsActionTypes.REMOVE_POST,
     payload: id,
