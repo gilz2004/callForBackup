@@ -8,7 +8,9 @@ import { Store, applyMiddleware } from 'webext-redux';
 import logger from 'redux-logger';
 
 const proxyStore = new Store();
-const middleware = [logger];
+const middleware = [];
+if (process.env.NODE_ENV === 'development') middleware.push(logger);
+
 const storeWithMiddleware = applyMiddleware(proxyStore, ...middleware);
 proxyStore
   .ready()
