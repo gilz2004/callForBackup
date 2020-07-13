@@ -5,14 +5,15 @@ import { connect } from 'react-redux';
 import { removePost } from '../Redux/Actions/postAction';
 import { removePostFromDb } from '../firebase/firebase';
 
-const PostBox = styled.div`
+export const PostBox = styled.div`
   height: 40px;
-  border-bottom: 2px solid #f0f0f2;
   display: flex;
   justify-content: space-between;
   padding: 0 8px;
   align-items: center;
   cursor: pointer;
+  border-bottom: ${(props) =>
+    props.lastPostItem ? 'none' : '2px solid #f0f0f2'};
 `;
 
 const Title = styled.div`
@@ -23,6 +24,7 @@ const PostNumbers = styled.div`
 `;
 
 const Post = ({
+  lastPostItem,
   id,
   title,
   callsForHelp,
@@ -50,7 +52,7 @@ const Post = ({
   };
 
   return (
-    <PostBox>
+    <PostBox lastPostItem={lastPostItem}>
       <Title onClick={handleTabClick}>{title}</Title>
       <PostNumbers onClick={() => handlePostRemove(id)}>
         {removePostMsg}
