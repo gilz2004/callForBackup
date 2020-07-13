@@ -24,11 +24,11 @@ const PopUpBox = styled.div`
   font-family: 'Bellefair', serif;
   position: relative;
 `;
-const initialPosts = {};
-const Popup = ({ addPost, updatePost, posts }) => {
-  const [posts, setPosts] = React.useState(initialPosts);
+
+const Popup = ({ addPost, updatePosts }) => {
   React.useEffect(() => {
     const realTimeUpdate = listenToData('posts');
+
     realTimeUpdate.on('value', async (snapShot) => {
       try {
         const response = await snapShot.val();
@@ -37,34 +37,31 @@ const Popup = ({ addPost, updatePost, posts }) => {
           updatePosts(posts);
         }
       } catch (err) {
-        console.log('Something wrong', err);
+        console.error('Something wrong', err);
       }
     });
-  }, []);
+  }, [updatePosts]);
+
+  const creaeNewPost = (title, pageUrl) => ({
+    id: uuidv4(),
+    title,
+    postCategory: '',
+    pageUrl,
+    date: new Date(),
+    postCounter: 1,
+  });
 
   chrome.contextMenus.onClicked.addListener(
     async ({ menuItemId, selectionText, pageUrl }) => {
       if (menuItemId === 'selectedData' && selectionText && pageUrl) {
         const newTitle = restrictSelectedTitleLength(selectionText);
-        // TODO: CHECK HOW MANY CALL FOR HELP BY THE POST URL.
-        // TODO:MAKE SURE THAT HTE USER SELECT ONLY THE FIREST ROW TO SET THE TITLE AS ONLY FIRST ROW STRING
-        const newPost = {
-          id: uuidv4(),
-          title: newTitle,
-          postCategory: '',
-          pageUrl,
-          data: new Date(),
-        };
-
-        // if (checkForExistsingPost(posts, pageUrl)) return;
+        const newPost = creaeNewPost(newTitle, pageUrl);
         try {
           await writeData(newPost);
-          addPost(newPost);
         } catch (err) {
           console.error(err);
         }
       }
-      return;
     }
   );
 

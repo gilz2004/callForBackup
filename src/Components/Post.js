@@ -32,7 +32,6 @@ const Post = ({
   ...other
 }) => {
   const removePostMsg = 'מחק קריאה';
-
   const handleTabClick = () => {
     chrome.tabs.create({
       url: `${pageUrl}`,
@@ -63,4 +62,5 @@ const Post = ({
 const mapDispatchToProps = (dispatch) => ({
   removePost: (id) => dispatch(removePost(id)),
 });
+
 export default connect(null, mapDispatchToProps)(Post);
