@@ -25,5 +25,5 @@ export const writeData = async (post) => {
   }
 };
 
-export const listenToData = (posts) => database.ref(`${posts}/`);
+export const listenToData = (posts) => database.ref(`${posts}`);
 export const removePostFromDb = (id) => database.ref('posts/' + id).remove();

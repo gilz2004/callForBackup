@@ -26,22 +26,6 @@ const PopUpBox = styled.div`
 `;
 
 const Popup = ({ addPost, updatePosts }) => {
-  React.useEffect(() => {
-    const realTimeUpdate = listenToData('posts');
-
-    realTimeUpdate.on('value', async (snapShot) => {
-      try {
-        const response = await snapShot.val();
-        if (response) {
-          const posts = Object.values(response);
-          updatePosts(posts);
-        }
-      } catch (err) {
-        console.error('Something wrong', err);
-      }
-    });
-  }, [updatePosts]);
-
   const creaeNewPost = (title, pageUrl) => ({
     id: uuidv4(),
     title,
@@ -51,6 +35,28 @@ const Popup = ({ addPost, updatePosts }) => {
     postCounter: 1,
   });
 
+  React.useEffect(() => {
+    const realTimeUpdate = listenToData('posts');
+    const populateAppData = async () => {
+      try {
+        realTimeUpdate.on('value', (snapShot) => {
+          //TODO : GET ONLY THE LAST CHANGED DATA PIECE.
+          //This solution will loop each time over the all posts array. = not efficient  = waste!
+          let posts = [];
+          snapShot.forEach((snap) => {
+            posts.push(snap.val());
+          });
+          updatePosts(posts);
+        });
+      } catch (err) {
+        console.error('Problem with fetching data from Server', err);
+      }
+    };
+    populateAppData();
+    return () => realTimeUpdate.off();
+  });
+
+  // child_added
   chrome.contextMenus.onClicked.addListener(
     async ({ menuItemId, selectionText, pageUrl }) => {
       if (menuItemId === 'selectedData' && selectionText && pageUrl) {
