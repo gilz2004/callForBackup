@@ -13,7 +13,6 @@ var firebaseConfig = {
 };
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
-firebase.analytics();
 
 const database = firebase.database();
 
@@ -25,5 +24,5 @@ export const writeData = async (post) => {
   }
 };
 
-export const listenToData = (posts) => database.ref(`${posts}`);
+export const getData = (posts) => database.ref(`${posts}`);
 export const removePostFromDb = (id) => database.ref('posts/' + id).remove();

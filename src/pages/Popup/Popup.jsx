@@ -12,7 +12,7 @@ import {
 import { connect } from 'react-redux';
 import { addPost, updatePosts } from '../../Redux/Actions/postAction';
 import Content from '../../Components/Content';
-import { writeData, listenToData } from '../../firebase/firebase';
+import { writeData, getData } from '../../firebase/firebase';
 
 const PopUpBox = styled.div`
   background: #34495e;
@@ -36,27 +36,34 @@ const Popup = ({ addPost, updatePosts }) => {
   });
 
   React.useEffect(() => {
-    const realTimeUpdate = listenToData('posts');
-    const populateAppData = async () => {
-      try {
-        realTimeUpdate.on('value', (snapShot) => {
-          //TODO : GET ONLY THE LAST CHANGED DATA PIECE.
-          //This solution will loop each time over the all posts array. = not efficient  = waste!
-          let posts = [];
-          snapShot.forEach((snap) => {
-            posts.push(snap.val());
-          });
-          updatePosts(posts);
+    getData('posts')
+      .once('value')
+      .then((snapshot) => {
+        let posts = [];
+        snapshot.forEach((snap) => {
+          posts.push(snap.val());
         });
-      } catch (err) {
-        console.error('Problem with fetching data from Server', err);
-      }
-    };
-    populateAppData();
-    return () => realTimeUpdate.off();
+        updatePosts(posts);
+      })
+      .catch((err) => console.error('Cant fetch data,sorry', err));
   });
 
-  // child_added
+  const populateAppData = async () => {
+    const realTimeUpdate = getData('posts');
+    try {
+      realTimeUpdate.on('value', (snapShot) => {
+        let posts = [];
+        snapShot.forEach((snap) => {
+          posts.push(snap.val());
+        });
+        updatePosts(posts);
+      });
+      // realTimeUpdate.off();?
+    } catch (err) {
+      console.error('Problem with fetching data from Server', err);
+    }
+  };
+
   chrome.contextMenus.onClicked.addListener(
     async ({ menuItemId, selectionText, pageUrl }) => {
       if (menuItemId === 'selectedData' && selectionText && pageUrl) {
@@ -64,6 +71,7 @@ const Popup = ({ addPost, updatePosts }) => {
         const newPost = creaeNewPost(newTitle, pageUrl);
         try {
           await writeData(newPost);
+          populateAppData();
         } catch (err) {
           console.error(err);
         }
