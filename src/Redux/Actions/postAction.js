@@ -39,9 +39,11 @@ export const fetchPostsAsync = () => {
   return (dispatch) => {
     dispatch(fetchPostsStart());
     try {
+      console.log('im here>');
       getData('posts')
         .limitToLast(20)
         .once('value', (snapshot) => {
+          console.log('im herer2');
           let posts = [];
           snapshot.forEach((snapPost) => {
             posts.push(snapPost);

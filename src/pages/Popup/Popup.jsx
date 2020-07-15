@@ -3,7 +3,7 @@ import React from 'react';
 import styled from 'styled-components';
 import Header from '../../Components/Header';
 import Tabs from '../../Components/Tabs';
-
+import Loading from '../../Components/Loading';
 import { v4 as uuidv4 } from 'uuid';
 import {
   restrictSelectedTitleLength,
@@ -38,22 +38,28 @@ export const createNewPost = (title, pageUrl) => ({
   postCounter: 1,
 });
 
-const Popup = ({ fetchPostsAsync }) => {
+const Popup = ({ fetchPostsAsync, isFetching }) => {
+  console.log('IM LOADING ?', isFetching);
+
   React.useEffect(() => {
     fetchPostsAsync();
-  });
+  }, [fetchPostsAsync]);
 
   return (
     <PopUpBox>
       <Header />
       <Tabs />
-      <Content />
+      {isFetching ? <Loading /> : <Content />}
     </PopUpBox>
   );
 };
+
+const mapStateToProps = (state) => ({
+  isFetching: state.callsForHelp.isFetching,
+});
 
 const mapDispatchToProps = (dispatch) => ({
   fetchPostsAsync: () => dispatch(fetchPostsAsync()),
 });
 
-export default connect(null, mapDispatchToProps)(Popup);
+export default connect(mapStateToProps, mapDispatchToProps)(Popup);
