@@ -1,7 +1,11 @@
+import { getData } from '../../firebase/firebase';
+
 export const postsActionTypes = {
   ADD_POST: 'ADD_POST',
   REMOVE_POST: 'REMOVE_POST',
-  UPDATE_POSTS: 'UPDATE_POSTS',
+  FETCH_POSTS_START: 'FETCH_POSTS_START',
+  FETCH_POSTS_SUCCESS: 'FETCH_POSTS_SUCCESS',
+  FETCH_POSTS_FAILED: 'FETCH_POSTS_FAILED',
 };
 
 export const addPost = (post) => ({
@@ -15,7 +19,37 @@ export const removePost = (id) => {
   };
 };
 
-export const updatePosts = (posts) => ({
-  type: postsActionTypes.UPDATE_POSTS,
+// USE WITH THUNK
+
+export const fetchPostsSuccsses = (posts) => ({
+  type: postsActionTypes.FETCH_POSTS_SUCCESS,
   payload: posts,
 });
+
+export const fetchPostsStart = () => ({
+  type: postsActionTypes.FETCH_POSTS_START,
+});
+
+export const fetchPostsFailed = (err) => ({
+  type: postsActionTypes.FETCH_POSTS_FAILED,
+  payload: err,
+});
+
+export const fetchPostsAsync = () => {
+  return (dispatch) => {
+    dispatch(fetchPostsStart());
+    try {
+      getData('posts')
+        .limitToLast(20)
+        .once('value', (snapshot) => {
+          let posts = [];
+          snapshot.forEach((snapPost) => {
+            posts.push(snapPost);
+          });
+          dispatch(fetchPostsSuccsses(posts));
+        });
+    } catch (err) {
+      dispatch(fetchPostsFailed(err));
+    }
+  };
+};

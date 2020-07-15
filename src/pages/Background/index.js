@@ -4,10 +4,8 @@ import { wrapStore } from 'webext-redux';
 import { reduxStore } from '../../Redux/Store/store';
 import { restrictSelectedTitleLength } from '../../../utils/helpers';
 import { createNewPost } from '../Popup/Popup';
-import { writeData, getData } from '../../firebase/firebase';
+import { writeData } from '../../firebase/firebase';
 import { v4 as uuidv4 } from 'uuid';
-import { addPost } from '../../Redux/Actions/postAction';
-import { useDispatch } from 'react-redux';
 wrapStore(reduxStore);
 const availableContextMenuPages = ['https://www.facebook.com/*'];
 

@@ -10,7 +10,11 @@ import {
   checkForExistsingPost,
 } from '../../../utils/helpers';
 import { connect } from 'react-redux';
-import { addPost, updatePosts } from '../../Redux/Actions/postAction';
+import {
+  addPost,
+  updatePosts,
+  fetchPostsAsync,
+} from '../../Redux/Actions/postAction';
 import Content from '../../Components/Content';
 import { writeData, getData } from '../../firebase/firebase';
 
@@ -34,18 +38,9 @@ export const createNewPost = (title, pageUrl) => ({
   postCounter: 1,
 });
 
-const Popup = ({ addPost, updatePosts }) => {
+const Popup = ({ fetchPostsAsync }) => {
   React.useEffect(() => {
-    getData('posts')
-      .limitToLast(20)
-      .on('value', (snapshot) => {
-        let posts = [];
-        snapshot.forEach((snapPost) => {
-          posts.push(snapPost);
-        });
-        updatePosts(posts);
-      });
-    return () => getData('posts').off();
+    fetchPostsAsync();
   });
 
   return (
@@ -58,8 +53,7 @@ const Popup = ({ addPost, updatePosts }) => {
 };
 
 const mapDispatchToProps = (dispatch) => ({
-  addPost: (post) => dispatch(addPost(post)),
-  updatePosts: (posts) => dispatch(updatePosts(posts)),
+  fetchPostsAsync: () => dispatch(fetchPostsAsync()),
 });
 
 export default connect(null, mapDispatchToProps)(Popup);
