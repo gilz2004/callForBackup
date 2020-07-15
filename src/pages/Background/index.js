@@ -6,6 +6,7 @@ import { restrictSelectedTitleLength } from '../../../utils/helpers';
 import { createNewPost } from '../Popup/Popup';
 import { writeData } from '../../firebase/firebase';
 import { v4 as uuidv4 } from 'uuid';
+import { addPost } from '../../Redux/Actions/postAction';
 wrapStore(reduxStore);
 const availableContextMenuPages = ['https://www.facebook.com/*'];
 
@@ -26,10 +27,16 @@ chrome.contextMenus.onClicked.addListener(async (menuContextData) => {
     const newPost = createNewPost(newTitle, frameUrl);
     try {
       await writeData(newPost);
+      const { dispatch } = reduxStore;
+      dispatch(addPost(newPost));
     } catch (err) {
       console.error('Something went wrong', err);
     }
   }
 });
+//TODO:REMOVE CONSOLE LOGS AND COMMENTS
+console.log('background scripts here.', reduxStore);
 
-console.log('background scripts here.');
+// chrome.runtime.onMessage.addListener((response, sender, sendResponse) => {
+//   console.log('response', response);
+// });

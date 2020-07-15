@@ -39,7 +39,8 @@ export const createNewPost = (title, pageUrl) => ({
 });
 
 const Popup = ({ fetchPostsAsync, isFetching }) => {
-  console.log('IM LOADING ?', isFetching);
+  //TODO: REMOVE THIS COMMENT:
+  // chrome.runtime.sendMessage('Hello world');
 
   React.useEffect(() => {
     fetchPostsAsync();
